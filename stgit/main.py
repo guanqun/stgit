@@ -144,6 +144,18 @@ def _main():
     if cmd in ['copyright']:
         print __copyright__
         sys.exit(utils.STGIT_SUCCESS)
+    try:
+        patches_nr = int(cmd)
+        if patches_nr >= 0:
+            cmd = 'push'
+        else:
+            cmd = 'pop'
+            patches_nr = -patches_nr
+        sys.argv[1] = cmd
+        del sys.argv[2:]
+        sys.argv += ['-n', str(patches_nr)]
+    except:
+        pass
 
     # re-build the command line arguments
     cmd = commands.canonical_cmd(cmd)
