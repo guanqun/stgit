@@ -28,4 +28,3 @@ The future, when time allows or if someone else does them:
 - multiple heads in a patch - useful for forking a patch,
   synchronising with other patches (diff format or in other
   repositories)
-- (config?) parameter for number of patches included by "series -s"
