@@ -103,6 +103,9 @@ class GitConfig:
         Run('git', 'config', name, value).run()
         self.__cache[name] = value
 
+    def set_raw(self, key, value):
+        self.__cache.setdefault(key, []).insert(0, value)
+
     def unset(self, name):
         Run('git', 'config', '--unset', name).run()
         self.__cache[name] = [None]
@@ -127,12 +130,26 @@ class GitConfig:
         
 config=GitConfig()
 
+def append_aliases(config):
+    try:
+        f = open(os.path.expanduser(config.get('stgit.aliasesfile')))
+        for line in f.readlines():
+            words = line.split()
+            if len(words) >= 3 and words[0] == 'alias':
+                value = ' '.join(words[2:]).decode('string_escape')
+                config.set_raw(words[1], value)
+        f.close()
+    except IOError:
+        pass
+
 def config_setup():
     global config
 
     os.environ.setdefault('PAGER', config.get('stgit.pager'))
     os.environ.setdefault('LESS', '-FRSX')
     # FIXME: handle EDITOR the same way ?
+
+    append_aliases(config)
 
 class ConfigOption:
     """Delayed cached reading of a configuration option.

@@ -85,6 +85,9 @@
 	# Behave as if the --keep option is always passed
 	#autokeep = no
 
+	# Mutt aliases file
+	#aliasesfile = ~/.mutt/aliases
+
 [stgit "alias"]
 	# Command aliases.
 	#add = git add
