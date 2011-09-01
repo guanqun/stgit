@@ -132,7 +132,10 @@ config=GitConfig()
 
 def append_aliases(config):
     try:
-        f = open(os.path.expanduser(config.get('stgit.aliasesfile')))
+        aliasfile = config.get('stgit.aliasesfile')
+        if not aliasfile:
+            return
+        f = open(os.path.expanduser(aliasfile))
         for line in f.readlines():
             words = line.split()
             if len(words) >= 3 and words[0] == 'alias':
