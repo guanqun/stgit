@@ -106,7 +106,7 @@ def __render_text(text, effects):
                  'magenta_background' : 45,
                  'cyan_background' : 46,
                  'white_background' : 47 }
-    start = [str(_effects[e]) for e in effects.split()]
+    start = [str(_effects[e]) for e in effects.split() if e in _effects]
     start = '\033[' + ';'.join(start) + 'm'
     stop = '\033[' + str(_effects['none']) + 'm'
     return ''.join([start, text, stop])
